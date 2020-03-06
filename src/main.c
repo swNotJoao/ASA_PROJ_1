@@ -4,6 +4,7 @@
 void buildGraph();
 void printGrades();
 
+typedef struct student student_t;
 typedef struct student{
   int friendNumber;
   int gradePrediction;
