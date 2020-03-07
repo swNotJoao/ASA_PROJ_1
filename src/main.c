@@ -11,7 +11,7 @@ typedef struct student{
 } student_t;
 
 int studentNumber, friendshipNumber;
-int i, j, grade, src, dest, tmp;
+int i, j, src, dest, tmp;
 student_t *graph;
 
 int main(int argc, char **argv, char **envp) {
@@ -26,8 +26,7 @@ void buildGraph(){
   graph = (student_t*) calloc(studentNumber, sizeof(student_t));
 
   for(i = 0; i < studentNumber; i++){
-    if(scanf("%d", &grade) != 1){};
-    graph[i].gradePrediction = grade;
+    if(scanf("%d", &graph[i].gradePrediction) != 1){};
     graph[i].friends = (student_t**) calloc(32, sizeof(student_t*));
   }
 
