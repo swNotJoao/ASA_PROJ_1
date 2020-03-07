@@ -26,7 +26,7 @@ void buildGraph(){
   int i, j, grade, src, dest, tmp;
 
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
-  graph = (student_t*) malloc(sizeof(student_t) * studentNumber);
+  graph = /*(student_t*)*/ malloc(sizeof(student_t) * studentNumber);
 
   for(i = 0; i < studentNumber; i++){
     if(scanf("%d", &grade) != 1){};
@@ -40,7 +40,7 @@ void buildGraph(){
     tmp = graph[src - 1].friendNumber;
 
     if(tmp % 256 == 0){
-      graph[src - 1].friends = realloc(graph[src - 1].friends, tmp + 32);
+      graph[src - 1].friends = realloc(graph[src - 1].friends, sizeof(student_t*)*(tmp + 32));
       graph[src - 1].friends[tmp + 32 - 1] = NULL;
     }
 
