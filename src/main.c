@@ -26,7 +26,7 @@ void buildGraph(){
   graph = (student_t*) calloc(studentNumber, sizeof(student_t));
 
   for(i = 0; i < studentNumber; i++){
-    if(scanf("%c", &graph[i].gradePrediction) != 1){};
+    if(scanf("%hhu", &graph[i].gradePrediction) != 1){};
     graph[i].friends = (student_t**) calloc(32, sizeof(student_t*));
   }
 
