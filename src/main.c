@@ -6,8 +6,8 @@ void printGrades();
 
 typedef struct student student_t;
 typedef struct student{
-  int friendNumber;
-  char gradePrediction;
+  unsigned int friendNumber;
+  unsigned char gradePrediction;
   student_t **friends;
 
 } student_t;
@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp) {
 }
 
 void buildGraph(){
-  int i, j, grade, src, dest, tmp;
+  unsigned int i, j, grade, src, dest, tmp;
 
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
   graph = (student_t*) malloc(sizeof(student_t) * studentNumber);
