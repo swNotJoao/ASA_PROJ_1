@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp) {
 }
 
 void buildGraph(){
-  unsigned int i, j, grade, src, dest, tmp;
+  int i, j, grade, src, dest, tmp;
 
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
   graph = (student_t*) malloc(sizeof(student_t) * studentNumber);
