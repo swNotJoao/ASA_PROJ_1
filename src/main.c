@@ -32,7 +32,7 @@ void buildGraph(){
     if(scanf("%d", &grade) != 1){};
     graph[i].friendNumber = 0;
     graph[i].gradePrediction = grade;
-    graph[i].friends = (student_t**) calloc(1024, sizeof(student_t*));
+    graph[i].friends = (student_t**) calloc(32, sizeof(student_t*));
   }
 
   for(i = 0; i < friendshipNumber; i++){
@@ -40,7 +40,8 @@ void buildGraph(){
     tmp = graph[src - 1].friendNumber;
 
     if(tmp % 256 == 0){
-      graph[src - 1].friends = realloc(graph[src - 1].friends, tmp + 1024);
+      graph[src - 1].friends = realloc(graph[src - 1].friends, tmp + 32);
+      graph[src - 1].friends[tmp + 32 - 1] = NULL;
     }
 
     graph[src - 1].friends[tmp] = &graph[dest - 1];
