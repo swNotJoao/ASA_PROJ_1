@@ -41,7 +41,6 @@ void buildGraph(){
 
     if(tmp % 32 == 0){
       graph[src - 1].friends = realloc(graph[src - 1].friends, sizeof(student_t*)*(tmp + 32));
-      graph[src - 1].friends[tmp + 32 - 1] = NULL;
     }
 
     graph[src - 1].friends[tmp] = &graph[dest - 1];
