@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void buildGraph();
-
 typedef struct student{
   unsigned int friendNumber;
   unsigned char gradePrediction;
@@ -14,15 +12,6 @@ int i, j, k, src, dest, tmp;
 student_t *graph;
 
 int main(int argc, char **argv, char **envp) {
-  buildGraph();
-
-  for(i = 0; i < studentNumber; i++)
-    printf("%d\n", graph[i].gradePrediction);
-
-  return 0;
-}
-
-void buildGraph(){
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
   graph = (student_t*) calloc(studentNumber, sizeof(student_t));
 
@@ -45,12 +34,14 @@ void buildGraph(){
       graph[src - 1].gradePrediction = graph[dest - 1].gradePrediction;
   }
 
-  for(k = 0; k < 2; k++){
-    for(i = studentNumber - 1; i >= 0; i--){
-      for(j = 0; j < graph[i].friendNumber; j++){
+  for(k = 0; k < 2; k++)
+    for(i = studentNumber - 1; i >= 0; i--)
+      for(j = 0; j < graph[i].friendNumber; j++)
         if(graph[i].friends[j] -> gradePrediction > graph[i].gradePrediction)
           graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;
-      }
-    }
-  }
+
+  for(i = 0; i < studentNumber; i++)
+    printf("%d\n", graph[i].gradePrediction);
+
+  return 0;
 }
