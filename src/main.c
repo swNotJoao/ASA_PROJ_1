@@ -53,16 +53,18 @@ int main(int argc, char **argv, char **envp) {
   return 0;
 }
 
-void dfs(student_t *student){
+int dfs(student_t *student){
   int i, max = student -> gradePrediction;
 
-  if (student -> friends[0] == NULL)
+  if (student -> friends[0] == NULL){
     student -> gradePrediction = max;
     return student -> gradePrediction;
+  }
 
-  for(i = 0; i < student -> friendNumber; i++)
-    if student -> friends[i] -> visited == 0
+  for (i = 0; i < student -> friendNumber; i++)
+    if (student -> friends[i] -> visited == 0)
       max = MAX(dfs(student -> friends[i]), max);
 
   student -> gradePrediction = max;
+  return max;
 }
