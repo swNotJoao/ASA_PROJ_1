@@ -13,8 +13,9 @@ typedef struct student{
 void propaga(student_t *student);
 
 int studentNumber, friendshipNumber;
-int i, j, k, src, dest, tmp, max = 0;
-student_t *graph, max_student;
+int i, j, k, src, dest, tmp;
+char max = 0;
+student_t *graph, *max_student;
 
 int main(int argc, char **argv, char **envp) {
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
@@ -25,7 +26,7 @@ int main(int argc, char **argv, char **envp) {
 
     if (graph[i].gradePrediction > max){
       max = graph[i].gradePrediction;
-      max_student = graph[i];
+      max_student = &graph[i];
     }
 
     graph[i].friends = (student_t**) calloc(32, sizeof(student_t*));
@@ -57,7 +58,9 @@ int main(int argc, char **argv, char **envp) {
     max_student.friends[i] -> visited = 1;
   }*/
 
-  propaga(&max_student);
+  /*max_student -> visited = 1;*/
+  propaga(max_student);
+
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
@@ -66,13 +69,13 @@ int main(int argc, char **argv, char **envp) {
 }
 
 void propaga(student_t *student){
+  student -> visited = 1;
   if (student -> friends[0] == NULL){
     return;
   }
 
   for(i = 0; i < student -> friendNumber; i++){
     student -> friends[i] -> gradePrediction = max;
-    student -> friends[i] -> visited = 1;
     if (student -> friends[i] -> visited == 0)
       propaga(student -> friends[i]);
   }
