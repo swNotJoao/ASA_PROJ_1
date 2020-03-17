@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define MAX(a,b) (((a)>(b))?(a):(b))
+int dfs(student_t *student);
+
 typedef struct student{
   unsigned int friendNumber;
   unsigned char gradePrediction;
@@ -30,18 +33,33 @@ int main(int argc, char **argv, char **envp) {
     graph[src - 1].friends[tmp] = &graph[dest - 1];
     graph[src - 1].friendNumber++;
 
-    if(graph[src - 1].gradePrediction < graph[dest - 1].gradePrediction)
-      graph[src - 1].gradePrediction = graph[dest - 1].gradePrediction;
+    /*if(graph[src - 1].gradePrediction < graph[dest - 1].gradePrediction)
+      graph[src - 1].gradePrediction = graph[dest - 1].gradePrediction;*/
   }
 
-  for(k = 0; k < 2; k++)
+  /*for(k = 0; k < 2; k++)
     for(i = studentNumber - 1; i >= 0; i--)
       for(j = 0; j < graph[i].friendNumber; j++)
         if(graph[i].friends[j] -> gradePrediction > graph[i].gradePrediction)
-          graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;
+          graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;*/
+
+
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
 
   return 0;
+}
+
+void dfs(student_t *student){
+  int i, max = student -> gradePrediction;
+
+  if (student -> friends[0] == NULL)
+    student -> gradePrediction = max;
+    return student -> gradePrediction;
+
+  for(i = 0; i < student -> friendNumber; i++)
+    max = MAX(dfs(student -> friends[i]), max);
+
+  student -> gradePrediction = max;
 }
