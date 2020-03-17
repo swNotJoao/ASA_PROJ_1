@@ -11,9 +11,10 @@ typedef struct student{
 } student_t;
 
 void propaga(student_t *student);
+student_t* find_newMax(student_t *graph);
 
 int studentNumber, friendshipNumber;
-int i, j, k, src, dest, tmp;
+int i, j, k, src, dest, tmp, visitedN = 0;
 char max = 0;
 student_t *graph, *max_student;
 
@@ -24,10 +25,10 @@ int main(int argc, char **argv, char **envp) {
   for(i = 0; i < studentNumber; i++){
     if(scanf("%hhu", &graph[i].gradePrediction) != 1){};
 
-    if (graph[i].gradePrediction > max){
+    /*if (graph[i].gradePrediction > max){
       max = graph[i].gradePrediction;
       max_student = &graph[i];
-    }
+    } */
 
     graph[i].friends = (student_t**) calloc(32, sizeof(student_t*));
   }
@@ -41,26 +42,12 @@ int main(int argc, char **argv, char **envp) {
 
     graph[dest - 1].friends[tmp] = &graph[src - 1];
     graph[dest - 1].friendNumber++;
-
-    /*if(graph[src - 1].gradePrediction < graph[dest - 1].gradePrediction)
-      graph[src - 1].gradePrediction = graph[dest - 1].gradePrediction;*/
   }
-  /*
-  for(k = 0; k < 2; k++)
-    for(i = studentNumber - 1; i >= 0; i--)
-      for(j = 0; j < graph[i].friendNumber; j++)
-        if(graph[i].friends[j] -> gradePrediction > graph[i].gradePrediction)
-          graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;
-  */
 
-  /*for(i = 0; i < max_student.friendNumber; i++){
-    max_student.friends[i] -> gradePrediction = max;
-    max_student.friends[i] -> visited = 1;
-  }*/
-
-  /*max_student -> visited = 1;*/
-  propaga(max_student);
-
+  while(visitedN <= studentNumber) {
+      max_student = find_newMax(graph);
+      propaga(max_student);
+  }
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
@@ -69,15 +56,35 @@ int main(int argc, char **argv, char **envp) {
 }
 
 void propaga(student_t *student){
-  student -> visited = 1;
-  if (student -> friends[0] == NULL){
+    student -> visited = 1;
+
+    if (student -> friends[0] == NULL){
+        student -> visited = 2;
+        visitedN++;
     return;
   }
 
   for(i = 0; i < student -> friendNumber; i++){
-    student -> friends[i] -> gradePrediction = max;
+      if (student -> friends[i] -> visited != 2) {
+          student -> friends[i] -> gradePrediction = max;
+      }
     if (student -> friends[i] -> visited == 0)
       propaga(student -> friends[i]);
   }
-  return;
+
+    student -> visited = 2;
+    visitedN++;
+    return;
+}
+
+student_t* find_newMax(student_t *graph){
+    int new_Max = 0;
+    student_t *newMaxStudent;
+    for(i = 0; i < studentNumber; i++){
+        if(graph[i].visited != 2){
+            max = MAX(new_Max, graph[i].gradePrediction);
+            newMaxStudent = &graph[i];
+        }
+    }
+    return newMaxStudent;
 }
