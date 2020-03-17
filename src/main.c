@@ -15,7 +15,7 @@ student_t* find_newMax(student_t *graph);
 
 int studentNumber, friendshipNumber;
 int i, j, k, src, dest, tmp, visitedN = 0;
-char max = 0;
+unsigned char max = 0;
 student_t *graph, *max_student;
 
 int main(int argc, char **argv, char **envp) {
@@ -44,7 +44,7 @@ int main(int argc, char **argv, char **envp) {
     graph[dest - 1].friendNumber++;
   }
 
-  while(visitedN <= studentNumber) {
+  while(visitedN < studentNumber) {
       max_student = find_newMax(graph);
       propaga(max_student);
   }
@@ -67,6 +67,7 @@ void propaga(student_t *student){
   for(i = 0; i < student -> friendNumber; i++){
       if (student -> friends[i] -> visited != 2) {
           student -> friends[i] -> gradePrediction = max;
+          printf("MAX = %hhu\n", max);
       }
     if (student -> friends[i] -> visited == 0)
       propaga(student -> friends[i]);
@@ -78,13 +79,15 @@ void propaga(student_t *student){
 }
 
 student_t* find_newMax(student_t *graph){
-    int new_Max = 0;
-    student_t *newMaxStudent;
+    unsigned char new_Max = 0;
+    student_t *newMaxStudent = NULL;
     for(i = 0; i < studentNumber; i++){
         if(graph[i].visited != 2){
-            max = MAX(new_Max, graph[i].gradePrediction);
+            new_Max = MAX(graph[i].gradePrediction, new_Max);
             newMaxStudent = &graph[i];
         }
     }
+    printf("max_student = %hhu\n", new_Max);
+    max = new_Max;
     return newMaxStudent;
 }
