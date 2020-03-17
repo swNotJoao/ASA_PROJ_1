@@ -2,13 +2,15 @@
 #include <stdio.h>
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
-int dfs(student_t *student);
 
 typedef struct student{
   unsigned int friendNumber;
   unsigned char gradePrediction;
+  unsigned char visited; /*0 ou 1*/
   struct student **friends;
 } student_t;
+
+int dfs(student_t *student);
 
 int studentNumber, friendshipNumber;
 int i, j, k, src, dest, tmp;
@@ -43,7 +45,7 @@ int main(int argc, char **argv, char **envp) {
         if(graph[i].friends[j] -> gradePrediction > graph[i].gradePrediction)
           graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;*/
 
-
+  dfs(&graph[0]);
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
@@ -59,7 +61,8 @@ void dfs(student_t *student){
     return student -> gradePrediction;
 
   for(i = 0; i < student -> friendNumber; i++)
-    max = MAX(dfs(student -> friends[i]), max);
+    if student -> friends[i] -> visited == 0
+      max = MAX(dfs(student -> friends[i]), max);
 
   student -> gradePrediction = max;
 }
