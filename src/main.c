@@ -62,9 +62,10 @@ int dfs(student_t *student){
   }
 
   for (i = 0; i < student -> friendNumber; i++)
-    if (student -> friends[i] -> visited == 0)
+    if (student -> friends[i] -> visited == 0){
+      student -> friends[i] -> visited = 1;
       max = MAX(dfs(student -> friends[i]), max);
-
+    }
   student -> gradePrediction = max;
   return max;
 }
