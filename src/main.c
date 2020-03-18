@@ -9,10 +9,11 @@ typedef struct student{
 } student_t;
 
 int studentNumber, friendshipNumber;
-int i, j, k, src, dest, tmp, max = 0;
+int i, j, k, src, dest, tmp, max = -1;
 student_t *graph, *max_student = NULL;
 
 void propaga(student_t *student);
+void find_newMax();
 
 int main(int argc, char **argv, char **envp) {
   if(scanf("%d,%d", &studentNumber, &friendshipNumber) != 2){};
@@ -42,15 +43,18 @@ int main(int argc, char **argv, char **envp) {
   }
 
   propaga(max_student);
-  for(i = 0; i < studentNumber; i++)
-    if (graph[i].pathsTaken != graph[i].friendNumber)
-      propaga(&graph[i]);
-
-  /*for(k = 0; k < 2; k++)
+  max_student -> pathsTaken = 1;
+  for(k = 0; k < 2; k++)
     for(i = studentNumber - 1; i >= 0; i--)
       for(j = 0; j < graph[i].friendNumber; j++)
         if(graph[i].friends[j] -> gradePrediction < graph[i].gradePrediction)
-          graph[i].gradePrediction = graph[i].friends[j] -> gradePrediction;*/
+          graph[i].friends[j] -> gradePrediction = graph[i].gradePrediction;
+
+  for(i = 0; i < studentNumber; i++){
+      find_newMax();
+      propaga(max_student);
+      max_student -> pathsTaken = 1;
+  }
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
@@ -61,15 +65,31 @@ int main(int argc, char **argv, char **envp) {
 void propaga(student_t *student){
   int i;
 
-  if (student -> pathsTaken == student -> friendNumber)
-    return;
+  /*if (student -> pathsTaken == student -> friendNumber)
+    return;*/
 
   for(i = 0; i < student -> friendNumber; i++){
-    if(student -> gradePrediction >= student->friends[i] -> gradePrediction){
+    if(student -> gradePrediction > student->friends[i] -> gradePrediction){
       student->friends[i] -> gradePrediction = student -> gradePrediction;
-      student -> pathsTaken++;
+      /*student -> pathsTaken++;*/
       propaga(student->friends[i]);
     }
   }
   return;
+}
+
+void find_newMax(){
+    for(i = 0; i < studentNumber; i++){
+        if(graph[i].pathsTaken == 0){
+            max_student = &graph[i];
+            break;
+        }
+    }
+
+    for(i = 0; i < studentNumber; i++){
+        if(graph[i].pathsTaken == 0){
+            if(graph[i].gradePrediction >= max_student->gradePrediction)
+              max_student = &graph[i];
+        }
+    }
 }
