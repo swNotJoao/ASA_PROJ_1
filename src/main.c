@@ -14,7 +14,7 @@ void dfs_visit(student_t* student, int* count, int* newGrade);
 student_t* find_newMax(student_t *graph);
 
 int studentNumber, friendshipNumber;
-int i, j, k, src, dest, tmp, nVisited  = 0;
+int i, src, dest, tmp, nVisited  = 0;
 student_t *graph;
 
 int main(int argc, char **argv, char **envp) {
@@ -59,7 +59,6 @@ void dfs_visit(student_t* student, int* count, int* newGrade) {
     int nEdges = student -> friendNumber;
     student -> visited = ++(*count);
     student -> gradePrediction = *newGrade;
-    nVisited++;
     for (i = 0; i < nEdges; i++){
         if(student -> friends[i] -> visited == 0){
             dfs_visit(student -> friends[i], count, newGrade);
