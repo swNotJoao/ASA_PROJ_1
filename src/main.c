@@ -13,6 +13,7 @@ int i, j, k, src, dest, tmp, max = -1;
 student_t *graph, *max_student = NULL;
 
 void propaga(student_t *student);
+void propaga2(student_t *student);
 void find_newMax();
 
 int main(int argc, char **argv, char **envp) {
@@ -44,6 +45,7 @@ int main(int argc, char **argv, char **envp) {
 
   propaga(max_student);
   max_student -> pathsTaken = 1;
+
   for(k = 0; k < 2; k++)
     for(i = studentNumber - 1; i >= 0; i--)
       for(j = 0; j < graph[i].friendNumber; j++)
@@ -54,7 +56,7 @@ int main(int argc, char **argv, char **envp) {
       find_newMax();
       propaga(max_student);
       max_student -> pathsTaken = 1;
-  }
+    }
 
   for(i = 0; i < studentNumber; i++)
     printf("%d\n", graph[i].gradePrediction);
