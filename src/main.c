@@ -48,11 +48,11 @@ int main(int argc, char **argv, char **envp) {
   propaga(max_student);
   max_student -> maxed = 1;
 
-  /*for(k = 0; k < 2; k++)
+  for(k = 0; k < 2; k++)
     for(i = studentNumber - 1; i >= 0; i--)
       for(j = 0; j < graph[i].friendNumber; j++)
         if(graph[i].friends[j] -> gradePrediction < graph[i].gradePrediction)
-          graph[i].friends[j] -> gradePrediction = graph[i].gradePrediction;*/
+          graph[i].friends[j] -> gradePrediction = graph[i].gradePrediction;
 
   for(i = 0; i < studentNumber; i++){
       find_newMax();
